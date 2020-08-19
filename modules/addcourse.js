@@ -1,4 +1,6 @@
 const Course = require("../models/Course");
+
+
 //for adding a new course
 function addCourses(req, res, next) {
   let courseName = req.body.coursename;
@@ -54,8 +56,35 @@ function showCourses(req, res) {
     res.status(200).send(data);
   });
 }
+
+
+//for adding a coursepdf
+function coursepdf(req, res, next) {
+  
+  console.log(req.file);
+
+  let courseName = req.body.coursename;
+  let courseLecturer = req.body.courselecturer;
+  let coursedata = new Course({
+    coursename: courseName,
+    courselecturer: courseLecturer,
+  image: req.file.path
+  });
+  coursedata
+    .save()
+    .then((doc) => {
+      res.status(201).json({
+        message: "coursepdf added successfully",
+        results: doc,
+      });
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+}
 module.exports = {
   addCourses,
   addNewStudent,
   showCourses,
+  coursepdf
 };
