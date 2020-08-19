@@ -1,30 +1,31 @@
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 autoIncrement = require("mongoose-auto-increment");
 var connection = mongoose.createConnection("mongodb://localhost/test");
 autoIncrement.initialize(connection);
-// Schema definition
-var CourseSchema = new Schema({
-  coursename: {
-    type: String,
-    required: true,
-  },
-  courselecturer: {
-    type: String,
-    required: true,
-  },
-  enrolledStudents: [],
-  courseid: {
-    type: Number,
-  },
+
+
+var Course = new Schema({
+coursename: {type:String,
+    required:true,
+    
+    },
+courselecturer: {type:String,
+        required:true,
+},
+image:{type:String,
+        required:true,
+      },
+courseid: {type:Number
+            },
+  enrolledStudents:[],
+
 });
-CourseSchema.plugin(autoIncrement.plugin, {
-  //auto increment implementation
+
+Course.plugin(autoIncrement.plugin, {
   model: "Course",
   field: "courseid",
   startAt: 1000,
 });
-
-// Compile model from schema
-var CourseModel = mongoose.model("Course", CourseSchema);
-module.exports = CourseModel;
+var Course = mongoose.model('Course', Course );
+module.exports = Course;
