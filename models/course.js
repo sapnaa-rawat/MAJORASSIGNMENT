@@ -13,12 +13,13 @@ coursename: {type:String,
 courselecturer: {type:String,
         required:true,
 },
-image:{type:String,
-        required:true,
-      },
 courseid: {type:Number
-            },
+},
   enrolledStudents:[],
+  
+image:{type:String,
+  required:false,
+},
 
 });
 

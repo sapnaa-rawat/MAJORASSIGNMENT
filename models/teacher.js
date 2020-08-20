@@ -3,7 +3,6 @@ var Schema = mongoose.Schema;
 autoIncrement = require("mongoose-auto-increment");
 var connection = mongoose.createConnection("mongodb://localhost/test");
 autoIncrement.initialize(connection);
-//Schema Definition
 var teachers = new Schema({
   username: {
     type: String,
@@ -17,7 +16,7 @@ var teachers = new Schema({
     required: true,
     index: {
       unique: true,
-    }, // for email validation
+    },
     match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
   },
   password: { type: String, required: true },
