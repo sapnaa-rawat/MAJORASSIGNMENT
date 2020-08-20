@@ -1,5 +1,5 @@
 const Course = require("../models/Course");
-
+const mail = require("./mailer");
 
 //for adding a new course
 function addCourses(req, res, next) {
@@ -41,7 +41,7 @@ function addNewStudent(req, res) {
           message: "student added successfully",
           results: data,
         });
-      }
+      mail.sendingMail(studentID);}
     })
     .catch((err) => {
       res.json(err);
