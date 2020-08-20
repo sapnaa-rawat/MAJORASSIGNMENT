@@ -85,9 +85,28 @@ function coursepdf(req, res, next) {
       res.json(err);
     });
 }
+//For updating marks 
+function addMarks(req, res) {
+  var marksGiven = {
+    courseID: req.body.courseid,
+    marksObtained: req.body.marks,
+  };
+  Students.findOneAndUpdate(
+    { studentid: req.body.studentid },
+    { $addToSet: { marks: marksGiven } },{new:true}
+  ).then((data) => {
+    res.status(200).json({ message: "added successfully", results: data });
+  })
+  .catch((err)=>{
+    res.json(err);
+  });
+}
+
+
 module.exports = {
   addCourses,
   addNewStudent,
   showCourses,
-  coursepdf
+  coursepdf,
+  addMarks
 };
