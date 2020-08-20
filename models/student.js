@@ -12,6 +12,7 @@ var Students = new Schema({
       unique: true,
     },
   },
+  marks: [{ courseID: { type: Number } }, { marksObtained: { type: Number } }],
   email: {
     type: String,
     required: true,
