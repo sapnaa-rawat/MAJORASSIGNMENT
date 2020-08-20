@@ -5,7 +5,7 @@ var multer = require('multer');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '../public/uploads/')
+    cb(null, '../public/uploads')
   },
   filename: function (req, file, cb) {
     cb(null,Date.now()+ file.originalname)
@@ -36,7 +36,7 @@ function authToken(req, res, next) {
       console.log(decode._doc);
       next();
     } catch (err) {
-      res.status(401).send("invalid t4oken");
+      res.status(401).send("invalid token");
     }
   }
 var user1=require('../modules/teacherRegister')

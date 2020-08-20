@@ -19,7 +19,7 @@ router.get('/download', function (req, res, next) {
 router.post('/signup',user.signupUser)
 router.post('/login',users.loginuser)
 router.post('/showcourses',course.showCourses)
-//router.post('/downloadpdf',download.single('coursePdf'),course.coursepdf)
+router.post('/downloadpdf',download.single('coursePdf'),course.coursepdf)
 
 module.exports = router;
 
