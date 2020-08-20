@@ -15,9 +15,9 @@ subject: "Sending Email using Node.js",
 text: "Hello There! You have been enrolled in a Course",
 attachments: [
     {
-      filename: 'course.png',
-      path:  'public/uploads/course.png',
-      cid: 'uniq-mailtrap.png' 
+      filename: 'course.pdf',
+      path:  'public/uploads/course.pdf',
+      cid: 'uniq-mailtrap.pdf' 
     }
   ]
 }; 
