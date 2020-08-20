@@ -1,7 +1,6 @@
 const Course = require("../models/Course");
-const mail = require("./mailer");
-
 //for adding a new course
+const mail = require("./mailer");
 function addCourses(req, res, next) {
   let courseName = req.body.coursename;
   let courseLecturer = req.body.courselecturer;
@@ -26,11 +25,11 @@ function addCourses(req, res, next) {
 
 function addNewStudent(req, res) {
   var courseID = req.body.courseid;
-  var studentID = req.body.studentid;
+  var studentEmail = req.body.studentemail;
 
   Course.findOneAndUpdate(
     { courseid: courseID },
-    { $push: { enrolledStudents: studentID } },
+    { $addToSet: { enrolledStudents: studentEmail } },
     { new: true }
   )
     .then((data) => {
@@ -41,8 +40,10 @@ function addNewStudent(req, res) {
           message: "student added successfully",
           results: data,
         });
-      mail.sendingMail(studentID);}
+        mail.sendingMail(studentEmail);
+      }
     })
+
     .catch((err) => {
       res.json(err);
     });
@@ -52,11 +53,10 @@ function showCourses(req, res) {
   var studentEmail = req.body.studentemail;
 
   Course.find({ enrolledStudents: { $in: studentEmail } }).then((data) => {
-    console.log(data);
+   // console.log(data);
     res.status(200).send(data);
   });
 }
-
 
 //for adding a coursepdf
 function coursepdf(req, res, next) {
@@ -82,9 +82,9 @@ function coursepdf(req, res, next) {
       res.json(err);
     });
 }
+
 module.exports = {
   addCourses,
   addNewStudent,
   showCourses,
-  coursepdf
-};
+  coursepdf};
