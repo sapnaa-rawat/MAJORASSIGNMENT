@@ -1,4 +1,5 @@
 var nodemailer = require("nodemailer"); 
+
 function sendingMail(email){
 var sender = nodemailer.createTransport({ 
 service: 'gmail', 
@@ -13,13 +14,14 @@ from: "ankitprasad073@gmail.com",
 to: email, 
 subject: "Sending Email using Node.js", 
 text: "Hello There! You have been enrolled in a Course",
-attachments: [
+
+/*attachments: [
     {
-      filename: 'course.pdf',
-      path:  'public/uploads/course.pdf',
+      filename: 'uploads',
+      path:  'public/uploads',
       cid: 'uniq-mailtrap.pdf' 
     }
-  ]
+  ]*/
 }; 
 
 sender.sendMail(mail, function(error, info) { 

@@ -1,6 +1,8 @@
 const Course = require("../models/Course");
-//for adding a new course
 const mail = require("./mailer");
+
+//for adding a new course
+
 function addCourses(req, res, next) {
   let courseName = req.body.coursename;
   let courseLecturer = req.body.courselecturer;
@@ -58,6 +60,7 @@ function showCourses(req, res) {
   });
 }
 
+
 //for adding a coursepdf
 function coursepdf(req, res, next) {
   
@@ -82,9 +85,9 @@ function coursepdf(req, res, next) {
       res.json(err);
     });
 }
-
 module.exports = {
   addCourses,
   addNewStudent,
   showCourses,
-  coursepdf};
+  coursepdf
+};
