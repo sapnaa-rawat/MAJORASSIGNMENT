@@ -90,15 +90,15 @@ res.json({
   }
 };
 
-//for adding a new student using his student ID
+//remove student using his student ID
 
-function addNewStudent(req, res) {
+function removeStudent(req, res) {
   var courseID = req.body.courseid;
   var studentEmail = req.body.studentemail;
 
   Course.findOneAndUpdate(
     { courseid: courseID },
-    { $addToSet: { enrolledStudents: studentEmail } },
+    { $pull: { enrolledStudents: studentEmail } },
     { new: true }
   )
     .then((data) => {
@@ -106,7 +106,7 @@ function addNewStudent(req, res) {
         res.send("already exist");
       } else {
         res.status(200).json({
-          message: "student added successfully",
+          message: "student removed successfully",
           results: data,
         });
         mail.sendingMail(studentEmail);
@@ -119,9 +119,9 @@ function addNewStudent(req, res) {
 }
 //For checking which courses he's enrolled in
 function showCourses(req, res) {
-  var studentEmail = req.body.studentemail;
+  var studentId = req.body.studentid;
 
-  Course.find({ enrolledStudents: { $in: studentEmail } }).then((data) => {
+  Course.find({ enrolledStudents: { $in: studentId } }).then((data) => {
     // console.log(data);
     res.status(200).send(data);
   });
@@ -137,15 +137,23 @@ function coursepdf(req, res, next) {
   let testName= req.body.testname;
   let courseId = req.body.courseid;
   let maximumMarks=req.body.maximummarks;
-
+  let marksObtained=req.body.marksobtained
+  
+  if(marksObtained>=maximumMarks)
+  return res.json({
+    message:"enter marks less than/equal to 100"
+  })
   let coursedata = new tests({
     testname:testName,
     courseid: courseId ,
     maximummarks:maximumMarks,
+    marksobtained:marksObtained,
   file:req.file.originalname
    
   });
+  
   coursedata
+  
     .save()
     .then((doc) => {
       res.status(201).json({
@@ -156,59 +164,79 @@ function coursepdf(req, res, next) {
     .catch((err) => {
       res.json(err);
     });
-    res.redirect('/')
-}
-
-
-//download uploaded file
-http.createServer  ((req,res)=>{
-  const files=fs.createReadStream('../public/uploads/sr.jpg')
-
-  res.writeHead(200, { 'content-disposition':'attachement;filename:sr.jpg'})
-
-files.pipe(res)
-}).listen(8080)
-
-
-/*
+  }
+  
+ 
 //can chek the test from specific course
-function testExist(req, res, next){
-  console.log("check");
-  let id=req.params.id;
-  const users= tests.find({_id: id}).exec()
-  console.log(users);
-    next()
-}
-*/
+
+async function checkTest(req, res, next) {
+  try{
+    const test=await tests.findById(req.paramas.id);
+    if(!test){
+      return res.json({
+        success:false,
+        message:"test id doesnot exist",
+      }); 
+    }else{ 
+    let checkTest=await tests.find(req.params.id,req.body,{
+      new:true,
+      runValdator:true
+    })
+    res.json({
+      success:false,
+        message:"test id doesnot exist",
+       student:checkTest
+
+    });
+  }
+      }catch(err){
+        next(error)
+      }
+    }
+
 
 
 //update marks of student
-function addMarks(req, res) {
-  var marksGiven = {
+
+async function addMarks(req, res, next) {
+  try{var marksGiven = {
     courseID: req.body.courseid,
     marksObtained: req.body.marks,
   };
-  Students.findOneAndUpdate(
-    { studentid: req.body.studentid },
-    { $addToSet: { marks: marksGiven } },
-    { new: true }
-  )
-    .then((data) => {
-      res.status(200).json({ message: "added successfully", results: data });
-    })
-    .catch((err) => {
-      res.json(err);
-    });
-}
+    const course=await Course.findOne({courseid:req.body.courseid});
+    if(!course){
+      return res.json({
+        success:false,
+        message:"course id doesnot exist",
+      }); 
+    }else{
+      
+      Students.findOneAndUpdate(
+      { studentid: req.body.studentid },
+      { $addToSet: { marks: marksGiven } },
+      { new: true }
+    )
+     .then((data) => {
+        res.status(200).json({ message: "added successfully", results: data });
+      })
+    }
+  }
+    catch(error){
+      next(error);
+    
+    }
+  }
+  
+
 
 module.exports = {
   getCourses,
   addCourses,
   updateCourses,
-  addNewStudent,
+  removeStudent,
   showCourses,
   coursepdf,
   addMarks,
   deleteCourses,
- // testExist
+  checkTest
 }

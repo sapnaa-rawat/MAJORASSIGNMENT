@@ -11,13 +11,13 @@ auth: {
 var mail = { 
 from: "ankitprasad073@gmail.com", 
 to: email, 
-subject: "Course Enrollment", 
+subject: "Enrolled!", 
 text: "Hello There! You have been enrolled in a Course, here's your password to login : "+pass,
 /*attachments: [
     {
-      filename: 'course.png',
-      path:  'public/uploads/course.png',
-      cid: 'uniq-mailtrap.png' 
+      filename: 'course.pdf',
+      path:  'http://localhost:3000/public/uploads/final.pdf',
+      cid: 'uniq-mailtrap.pdf' 
     }
   ]*/
 }; 
