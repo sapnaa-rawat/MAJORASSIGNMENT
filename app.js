@@ -6,6 +6,10 @@ const mongoose = require('mongoose');
 var pug = require('pug');
 var bodyParser = require('body-parser');
 
+
+
+ 
+
 var app=pug;
 var app = express();
 
@@ -18,13 +22,16 @@ var teacherRouter=require('./routes/teacherRoutes');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+/*
+var pathh = path.resolve(__dirname, 'public');
+app.use(express.static(pathh));
+*/
 
-
-
-
+app.use('/public/uploads',express.static(__dirname+"/public/uploads"))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:false}));
 app.use(cookieParser());
+
 
 app.use('/student', usersRouter);
 app.use('/teacher', teacherRouter);
