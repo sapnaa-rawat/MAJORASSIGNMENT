@@ -1,6 +1,5 @@
 var nodemailer = require("nodemailer"); 
-
-function sendingMail(email){
+function sendingMail(email,pass){
 var sender = nodemailer.createTransport({ 
 service: 'gmail', 
 auth: { 
@@ -12,14 +11,13 @@ auth: {
 var mail = { 
 from: "ankitprasad073@gmail.com", 
 to: email, 
-subject: "Sending Email using Node.js", 
-text: "Hello There! You have been enrolled in a Course",
-
+subject: "Course Enrollment", 
+text: "Hello There! You have been enrolled in a Course, here's your password to login : "+pass,
 /*attachments: [
     {
-      filename: 'uploads',
-      path:  http://localhost:3000'public/uploads',
-      cid: 'uniq-mailtrap.pdf' 
+      filename: 'course.png',
+      path:  'public/uploads/course.png',
+      cid: 'uniq-mailtrap.png' 
     }
   ]*/
 }; 
