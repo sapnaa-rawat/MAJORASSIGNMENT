@@ -137,24 +137,17 @@ function coursepdf(req, res, next) {
   let testName= req.body.testname;
   let courseId = req.body.courseid;
   let maximumMarks=req.body.maximummarks;
-  let marksObtained=req.body.marksobtained
-  
-  if(marksObtained>=maximumMarks)
-  return res.json({
-    message:"enter marks less than/equal to 100"
-  })
+ 
   let coursedata = new tests({
     testname:testName,
     courseid: courseId ,
     maximummarks:maximumMarks,
-    marksobtained:marksObtained,
-  file:req.file.originalname
+    file:req.file.originalname
    
   });
   
   coursedata
-  
-    .save()
+      .save()
     .then((doc) => {
       res.status(201).json({
         message: "coursepdf added successfully",
