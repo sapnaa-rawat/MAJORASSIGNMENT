@@ -22,13 +22,13 @@ testid: {type:Number
 },
 marksObtained: { type: Number } ,
 totalmarks: { type: Number } ,
-  
+maximumMarks: { type: Number } , 
   
 file:{type:String,
   required:false,
 },
 marksgiven:{type:Number,
-//(marksObtained = totalmarks)||(marksObtained < totalmarks),
+
 }
 
 });
