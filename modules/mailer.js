@@ -18,7 +18,7 @@ text: "Hello There! You have been enrolled in a Course",
 /*attachments: [
     {
       filename: 'uploads',
-      path:  'public/uploads',
+      path:  http://localhost:3000'public/uploads',
       cid: 'uniq-mailtrap.pdf' 
     }
   ]*/
