@@ -16,14 +16,20 @@ testlecturer: {type:String,
 courseid: {type:Number,
     required:true,
 },
+studentid: { type: Number },
+
 testid: {type:Number
 },
 marksObtained: { type: Number } ,
+totalmarks: { type: Number } ,
   
   
 file:{type:String,
   required:false,
 },
+marksgiven:{type:Number,
+//(marksObtained = totalmarks)||(marksObtained < totalmarks),
+}
 
 });
 
