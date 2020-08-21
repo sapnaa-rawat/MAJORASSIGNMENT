@@ -1,6 +1,7 @@
   
 var express = require('express');
 var router = express.Router();
+var jwt=require('jsonwebtoken');
 var teacher=require('../modules/teacherRegister')
 var users1=require('../modules/teacherlogin')
 var course=require('../modules/addcourse.js')
@@ -50,14 +51,15 @@ function authToken(req, res, next) {
 router.post('/signup',teacher.signupteacher)
 router.post('/signupuser',teacher.signupUser)
 router.post('/login',users1.loginuser)
-router.post('/addcourse',course.addCourses)
-router.get('/allcourses',course.getCourses)
-router.put('/updatecourses/:id',course.updateCourses)
-router.delete('/deleteCourse:id',course.deleteCourses)
-router.post('/addstudent',course.addNewStudent)
-router.post('/updatemarks',course.addMarks)
-router.post('/uploadpdf',upload.single('coursePdf'),course.coursepdf)
+router.post('/addcourse',authToken,course.addCourses)
+router.get('/allcourses',authToken,course.getCourses)
+router.put('/updatecourses/:id',authToken,course.updateCourses)
+router.delete('/deleteCourse:id',authToken,course.deleteCourses)
+router.post('/removestudent',authToken,course.removeStudent,)
+router.post('/updatemarks',authToken,course.addMarks)
+router.post('/uploadpdf',upload.single('coursePdf'),authToken,course.coursepdf)
 router.post('/uploadpdf/multiple',upload.array('coursePdf',13),course.coursepdf)
+
 
 
 
