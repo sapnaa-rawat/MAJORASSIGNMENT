@@ -100,6 +100,6 @@ else{
 
 module.exports = {
 
-    signupteacher
-   
+    signupteacher,
+   signupUser
 };
