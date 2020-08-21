@@ -1,7 +1,7 @@
   
 var express = require('express');
 var router = express.Router();
-var user1=require('../modules/teacherRegister')
+var teacher=require('../modules/teacherRegister')
 var users1=require('../modules/teacherlogin')
 var course=require('../modules/addcourse.js')
 var multer = require('multer');
@@ -47,7 +47,8 @@ function authToken(req, res, next) {
   }
 
 
-router.post('/signup',user1.signupteacher)
+router.post('/signup',teacher.signupteacher)
+router.post('/signupuser',teacher.signupUser)
 router.post('/login',users1.loginuser)
 router.post('/addcourse',course.addCourses)
 router.get('/allcourses',course.getCourses)
